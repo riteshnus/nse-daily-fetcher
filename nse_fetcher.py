@@ -17,6 +17,14 @@ HEADERS = {
     "sec-fetch-site": "same-origin",
 }
 
+def sanitize(text):
+    return (str(text)
+        .replace('"', "'")
+        .replace('\\', '')
+        .replace('\r', '')
+        .replace('\n', ' ')
+        .strip())
+
 # ── SESSION ──────────────────────────────────────────
 def create_session():
     session = requests.Session()
@@ -83,18 +91,19 @@ def save_csv(data, filepath):
 # ── BUILD COMBINED JSON ───────────────────────────────
 def build_combined_json(most_active, upper_band, block_deals):
 
-    # Most active — top 10 by value
+    # Most active
     active_lines = []
     for i, s in enumerate(most_active[:10], 1):
         val_lakhs = round(s.get("totalTradedValue", 0) / 1e5, 2)
         active_lines.append(
-            f"{i}. {s.get('symbol')} LTP={s.get('lastPrice')} "
-            f"Change={s.get('pChange')}pct "
-            f"Value={round(s.get('totalTradedValue', 0) / 1e5, 2)}Lakhs"
+            f"{i}. {sanitize(s.get('symbol'))} "
+            f"LTP={sanitize(s.get('lastPrice'))} "
+            f"Change={sanitize(s.get('pChange'))}pct "
+            f"Value={val_lakhs}Lakhs"
         )
     active_text = " | ".join(active_lines)
 
-    # Upper band — sorted by turnover (already in crores)
+    # Upper band
     sorted_upper = sorted(
         upper_band,
         key=lambda x: float(x.get("turnover", 0)),
@@ -103,20 +112,25 @@ def build_combined_json(most_active, upper_band, block_deals):
     upper_lines = []
     for i, s in enumerate(sorted_upper[:15], 1):
         upper_lines.append(
-            f"{i}. {s.get('symbol')} LTP={s.get('ltp')} "
-            f"Change={str(s.get('pChange','0')).strip()}pct "
+            f"{i}. {sanitize(s.get('symbol'))} "
+            f"LTP={sanitize(s.get('ltp'))} "
+            f"Change={sanitize(str(s.get('pChange','0')).strip())}pct "
             f"Value={round(float(s.get('turnover', 0)), 2)}Cr"
         )
     upper_text = " | ".join(upper_lines)
 
-    # Block deals — grouped by security name
+    # Block deals grouped
     grouped = {}
     for deal in block_deals:
-        name = deal.get("name", deal.get("symbol", "Unknown"))
-        symbol = deal.get("symbol", "")
+        name = sanitize(deal.get("name", deal.get("symbol", "Unknown")))
+        symbol = sanitize(deal.get("symbol", ""))
         if name not in grouped:
             grouped[name] = {"symbol": symbol, "buyers": [], "sellers": []}
-        entry = f"Client={deal.get('clientName','N/A')} Qty={deal.get('qty','N/A')} Price={deal.get('watp','N/A')}"
+        entry = (
+            f"Client={sanitize(deal.get('clientName','NA'))} "
+            f"Qty={sanitize(deal.get('qty','NA'))} "
+            f"Price={sanitize(deal.get('watp','NA'))}"
+        )
         if deal.get("buySell", "").upper() == "BUY":
             grouped[name]["buyers"].append(entry)
         else:
@@ -133,20 +147,19 @@ def build_combined_json(most_active, upper_band, block_deals):
         )
     block_text = " || ".join(block_lines)
 
-    # Final prompt — single line, no newlines
     prompt = (
         f"You are an NSE market analyst. Generate a daily market report for {TODAY} "
         f"with exactly 3 sections formatted with emojis for Telegram. "
         f"SECTION 1 title: Stocks with Highest Traded Value (crores). "
-        f"List upper band hitter stocks ranked by highest traded value in crores first. "
+        f"List upper band hitter stocks ranked by highest traded value first. "
         f"Data: {upper_text}. "
         f"SECTION 2 title: Most Active Equities by Value. "
         f"Show symbol, value in lakhs, last price, percent change. "
         f"Data: {active_text}. "
         f"SECTION 3 title: Block Deal Transactions. "
-        f"Group by security name. Show buyers, sellers, quantity, trade price. "
+        f"Group by security name, show buyers, sellers, quantity, price. "
         f"Data: {block_text}. "
-        f"Format cleanly with section headers, emojis, bullet points."
+        f"Format with section headers, emojis and bullet points."
     )
 
     return {"prompt": prompt, "date": TODAY}
