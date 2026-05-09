@@ -41,10 +41,25 @@ def save_csv(data, filepath):
         writer = csv.DictWriter(f, fieldnames=data[0].keys())
         writer.writeheader()
         writer.writerows(data)
-    print(f"✅ Saved {filepath} — {len(data)} records")
+    print(f"✅ Saved CSV {filepath}")
+
+def save_summary(data, filepath):
+    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    with open(filepath, "w") as f:
+        f.write(f"NSE Most Active Equities - {TODAY}\n")
+        f.write("=" * 40 + "\n")
+        for item in data:
+            f.write(
+                f"Symbol: {item.get('symbol')} | "
+                f"Price: {item.get('lastPrice')} | "
+                f"Change: {item.get('pChange')}pct | "
+                f"Volume: {item.get('quantityTraded')} | "
+                f"Value: {item.get('totalTradedValue')}\n"
+            )
+    print(f"✅ Saved summary {filepath}")
 
 def main():
-    print(f"\n=== NSE Fetcher — {TODAY} ===\n")
+    print(f"\n=== NSE Fetcher - {TODAY} ===\n")
 
     session, headers = get_nse_session()
     securities = fetch_most_active(session, headers)
@@ -53,9 +68,9 @@ def main():
         print("❌ No data fetched")
         return
 
-    filepath = f"data/{TODAY}/most_active.csv"
-    save_csv(securities, filepath)
-    print(f"✅ Done — {len(securities)} records saved")
+    save_csv(securities, f"data/{TODAY}/most_active.csv")
+    save_summary(securities, f"data/{TODAY}/summary.txt")
+    print(f"✅ Done - {len(securities)} records saved")
 
 if __name__ == "__main__":
     main()
