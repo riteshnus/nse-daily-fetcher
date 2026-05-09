@@ -2,11 +2,11 @@ name: NSE Daily Fetcher
 
 on:
   schedule:
-    - cron: '0 11 * * 1-5'   # 4:30 PM IST Mon-Fri
-  workflow_dispatch:           # manual trigger
+    - cron: '0 11 * * 1-5'
+  workflow_dispatch:
 
 permissions:
-  contents: write              # needed to commit CSV back to repo
+  contents: write
 
 jobs:
   fetch:
@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4        # ← updated from v3
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5    # ← updated from v4
         with:
           python-version: '3.11'
 
