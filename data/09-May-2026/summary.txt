@@ -1,0 +1,22 @@
+NSE Most Active Equities - 09-May-2026
+========================================
+Symbol: SBIN | Price: 1018.4 | Change: -6.74pct | Volume: 48065909 | Value: 49865496632.96
+Symbol: BSE | Price: 3905 | Change: -1.48pct | Volume: 9146079 | Value: 35864336661.12
+Symbol: HDFCBANK | Price: 781 | Change: -1.89pct | Volume: 38016841 | Value: 29715103430.83
+Symbol: LENSKART | Price: 490.8 | Change: 0.63pct | Volume: 54291417 | Value: 26265101716.26
+Symbol: FSL | Price: 272.4 | Change: 15.83pct | Volume: 85477453 | Value: 22813932205.7
+Symbol: TITAN | Price: 4517 | Change: 4.86pct | Volume: 4777990 | Value: 21401907267.3
+Symbol: CRAFTSMAN | Price: 8990 | Change: 4.09pct | Volume: 2259509 | Value: 20976807059.11
+Symbol: BRITANNIA | Price: 5516 | Change: -5.13pct | Volume: 3173832 | Value: 17624193881.04
+Symbol: THERMAX | Price: 4707 | Change: 12.55pct | Volume: 3661500 | Value: 16922684085
+Symbol: ICICIBANK | Price: 1267.8 | Change: -0.88pct | Volume: 11137424 | Value: 14099867409.76
+Symbol: KISSHT | Price: 209.02 | Change: 10.01pct | Volume: 64104155 | Value: 13031733669.95
+Symbol: COFORGE | Price: 1365.2 | Change: 6.22pct | Volume: 9375709 | Value: 12628517480.46
+Symbol: RELIANCE | Price: 1436 | Change: -0.01pct | Volume: 8663105 | Value: 12374119288.85
+Symbol: MCX | Price: 3098 | Change: 1.82pct | Volume: 3775007 | Value: 11693423933.13
+Symbol: SCI | Price: 339.1 | Change: 6.1pct | Volume: 33413486 | Value: 11267027479.2
+Symbol: MRPL | Price: 167.97 | Change: 8.12pct | Volume: 66142408 | Value: 11032553654.4
+Symbol: JAINREC | Price: 565.3 | Change: 12.12pct | Volume: 19134565 | Value: 10718417930.4
+Symbol: HFCL | Price: 139.7 | Change: -4.47pct | Volume: 71352732 | Value: 10169904891.96
+Symbol: VEDL | Price: 297 | Change: -2.75pct | Volume: 32681575 | Value: 9825388708
+Symbol: NUVAMA | Price: 1631.1 | Change: 10.62pct | Volume: 5943190 | Value: 9575667728
