@@ -181,7 +181,7 @@ def build_equity_prompt(most_active, upper_band, block_deals):
         f"SECTION 3 title: Block Deal Transactions. "
         f"Group by security name, show buyers, sellers, quantity, price. "
         f"Data: {block_text}. "
-        f"Format with section headers, emojis and bullet points."
+        f"Format with emojis and plain text only. No asterisks, no underscores, no markdown symbols."
     )
 
 # ── BUILD DERIVATIVES PROMPT ──────────────────────────
